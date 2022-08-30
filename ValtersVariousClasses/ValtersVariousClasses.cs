@@ -1,10 +1,12 @@
 ﻿using BepInEx;
+using ClassesManagerReborn;
 using UnboundLib;
 using UnboundLib.Cards;
 using ValtersVariousClasses.Cards;
 using HarmonyLib;
 using CardChoiceSpawnUniqueCardPatch.CustomCategories;
-
+using ValtersVariousClasses.Cards.Demolitionist;
+using RocketBarrage = ValtersVariousClasses.Cards.Demolitionist.RocketBarrage;
 
 namespace ValtersVariousClasses
 {
@@ -35,7 +37,7 @@ namespace ValtersVariousClasses
         void Start()
         {
             instance = this;
-            CustomCard.BuildCard<CardName>();
+            CustomCard.BuildCard<RocketBarrage>((card) => RocketBarrage.Card = card);
         }
     }
 
