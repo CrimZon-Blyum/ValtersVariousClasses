@@ -7,7 +7,7 @@ using UnboundLib;
 using UnboundLib.Cards;
 using UnityEngine;
 
-namespace ValtersVariousClasses.Cards
+namespace ValtersVariousClasses.Cards.Demolitionist
 {
     class RocketBarrage : CustomCard
     {
@@ -29,11 +29,11 @@ namespace ValtersVariousClasses.Cards
         }
         protected override string GetTitle()
         {
-            return "CardName";
+            return "Rocket Barrage";
         }
         protected override string GetDescription()
         {
-            return "CardDescription";
+            return "Fire 1/4 of your clip each time you fire";
         }
         protected override GameObject GetCardArt()
         {
@@ -41,7 +41,7 @@ namespace ValtersVariousClasses.Cards
         }
         protected override CardInfo.Rarity GetRarity()
         {
-            return CardInfo.Rarity.Common;
+            return CardInfo.Rarity.Rare; 0
         }
         protected override CardInfoStat[] GetStats()
         {
@@ -50,15 +50,22 @@ namespace ValtersVariousClasses.Cards
                 new CardInfoStat()
                 {
                     positive = true,
-                    stat = "Effect",
-                    amount = "No",
+                    stat = "Fire rate",
+                    amount = "+10%",
+                    simepleAmount = CardInfoStat.SimpleAmount.notAssigned
+                },
+                new CardInfoStat()
+                {
+                    positive = true,
+                    stat = "reload speed",
+                    amount = "a lot more",
                     simepleAmount = CardInfoStat.SimpleAmount.notAssigned
                 }
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
         {
-            return CardThemeColor.CardThemeColorType.ColdBlue;
+            return CardThemeColor.CardThemeColorType.FirepowerYellow;
         }
         public override string GetModName()
         {
