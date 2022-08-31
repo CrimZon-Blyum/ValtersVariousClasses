@@ -7,13 +7,17 @@ using CardChoiceSpawnUniqueCardPatch.CustomCategories;
 using UnboundLib;
 using UnboundLib.Cards;
 using UnityEngine;
+using ValtersVariousClasses.Effects;
 
 namespace ValtersVariousClasses.Cards.Demolitionist
 {
     class RocketBarrage : CustomCard
     {
-        float burstsAmmountCalc;
+
+        public static readonly float BULLET_SPREAD = 5f / 180f;
         internal static CardInfo Card = null;
+        
+   
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             cardInfo.categories = new CardCategory[]
@@ -32,28 +36,29 @@ namespace ValtersVariousClasses.Cards.Demolitionist
         {
             //Edits values on player when card is selected
             UnityEngine.Debug.Log($"[{ValtersVariousClasses.ModInitials}][Card] {GetTitle()} has been added to player {player.playerID}.");
-            burstsAmmountCalc = gunAmmo.maxAmmo / 4;
-            if (burstsAmmountCalc % 1 != 0)
+            gun.spread += BULLET_SPREAD;
+            RocketBarrageEffect barrage = player.gameObject.GetComponent<RocketBarrageEffect>();
+            if (barrage == null)
             {
-                burstsAmmountCalc += 1;
-                burstsAmmountCalc = burstsAmmountCalc / 4;
-                if (burstsAmmountCalc % 1 != 0)
-                {
-                    burstsAmmountCalc += 1;
-                    burstsAmmountCalc = burstsAmmountCalc / 4;
-                }
+                barrage = player.gameObject.AddComponent<RocketBarrageEffect>();
+                barrage.SetLivesToEffect(int.MaxValue);
             }
-
-
-            gun.bursts = (int) burstsAmmountCalc;
+            barrage.HowMany++;
             gun.reloadTime *= 2;
-            
 
         }
+
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
             //Run when the card is removed from the player
             UnityEngine.Debug.Log($"[{ValtersVariousClasses.ModInitials}][Card] {GetTitle()} has been removed from player {player.playerID}.");
+            RocketBarrageEffect barrage = player.gameObject.GetComponent<RocketBarrageEffect>();
+            barrage.HowMany--;
+
+            if (barrage.HowMany < 1)
+            {
+                Destroy(barrage);
+            }
         }
         protected override string GetTitle()
         {
@@ -84,9 +89,8 @@ namespace ValtersVariousClasses.Cards.Demolitionist
                 },
                 new CardInfoStat()
                 {
-                    positive = true,
-                    stat = "ammo",
-                    amount = "+1",
+                    stat = "spread",
+                    amount = "tiny bit of",
                     simepleAmount = CardInfoStat.SimpleAmount.notAssigned
                 },
                 new CardInfoStat()
