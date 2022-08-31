@@ -38,9 +38,11 @@ namespace ValtersVariousClasses.Cards.Demolitionist
             //Run when the card is removed from the player
             UnityEngine.Debug.Log($"[{ValtersVariousClasses.ModInitials}][Card] {GetTitle()} has been removed from player {player.playerID}.");
             FragmentationHitSurfaceEffect hitEffect = player.gameObject.GetComponent<FragmentationHitSurfaceEffect>();
+            gun.GetAdditionalData().fragmentationProjectiles -= 3;
             if (hitEffect.amount <= 0)
             {
                 UnityEngine.GameObject.Destroy(hitEffect);
+   
             }
         }
         protected override string GetTitle()
