@@ -39,9 +39,12 @@ namespace ValtersVariousClasses
         private void Start()
         {
             instance = this;
-            CustomCard.BuildCard<RocketBarrage>((card) => RocketBarrage.Card = card);
-            CustomCard.BuildCard<FragmentingBullets>((card) => FragmentingBullets.Card = card);
+            //CustomCard.BuildCard<RocketBarrage>((card) => RocketBarrage.Card = card); <--works
+            //CustomCard.BuildCard<FragmentingBullets>((card) => FragmentingBullets.Card = card); <--doesnt work
+            CustomCard.BuildCard<RocketBarrage>;
+            CustomCard.BuildCard<FragmentingBullets>; //told to do it like this but it doesnt work
         }
+
     }
 
 }
