@@ -30,6 +30,7 @@ namespace ValtersVariousClasses.Cards.Demolitionist
             UnityEngine.Debug.Log($"[{ValtersVariousClasses.ModInitials}][Card] {GetTitle()} has been added to player {player.playerID}.");
             FragmentationHitSurfaceEffect hitEffect = player.gameObject.GetOrAddComponent<FragmentationHitSurfaceEffect>();
             hitEffect.shrapnel += 3;
+            hitEffect.amount++;
             gun.GetAdditionalData().fragmentationProjectiles += 3;
         }
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
@@ -37,7 +38,7 @@ namespace ValtersVariousClasses.Cards.Demolitionist
             //Run when the card is removed from the player
             UnityEngine.Debug.Log($"[{ValtersVariousClasses.ModInitials}][Card] {GetTitle()} has been removed from player {player.playerID}.");
             FragmentationHitSurfaceEffect hitEffect = player.gameObject.GetComponent<FragmentationHitSurfaceEffect>();
-            if (hitEffect)
+            if (hitEffect.amount <= 0)
             {
                 UnityEngine.GameObject.Destroy(hitEffect);
             }

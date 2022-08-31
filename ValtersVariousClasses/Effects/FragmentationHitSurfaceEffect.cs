@@ -42,6 +42,7 @@ namespace ValtersVariousClasses.Effects
     public class FragmentationHitSurfaceEffect : HitSurfaceEffect
     {
         static readonly System.Random rng = new System.Random() { };
+        public int amount = 0;
         public int shrapnel = 0;
         private Player player;
         private Gun gun;
