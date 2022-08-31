@@ -7,6 +7,7 @@ using HarmonyLib;
 using CardChoiceSpawnUniqueCardPatch.CustomCategories;
 using ValtersVariousClasses.Cards.Demolitionist;
 using RocketBarrage = ValtersVariousClasses.Cards.Demolitionist.RocketBarrage;
+using FragmentingBullets = ValtersVariousClasses.Cards.Demolitionist.FragmentingBullets;
 
 namespace ValtersVariousClasses
 {
@@ -28,16 +29,18 @@ namespace ValtersVariousClasses
 
         public static ValtersVariousClasses? instance { get; private set; }
 
-        void Awake()
+        private void Awake()
         {
             // Use this to call any harmony patch files your mod may have
             var harmony = new Harmony(ModId);
             harmony.PatchAll();
         }
-        void Start()
+
+        private void Start()
         {
             instance = this;
             CustomCard.BuildCard<RocketBarrage>((card) => RocketBarrage.Card = card);
+            CustomCard.BuildCard<FragmentingBullets>((card) => FragmentingBullets.Card = card);
         }
     }
 
