@@ -16,27 +16,31 @@ namespace ValtersVariousClasses.Cards.Demolitionist
 {
     internal class FragmentingBullets : CustomCard
     {
-        public FragmentationHitSurfaceEffect FragmentationHitSurfaceEffect;
         internal static CardInfo Card = null;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             //Edits values on card itself, which are then applied to the player in `ApplyCardStats`
             UnityEngine.Debug.Log($"[{ValtersVariousClasses.ModInitials}][Card] {GetTitle()} has been setup.");
+            
         }
 
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
             //Edits values on player when card is selected
             UnityEngine.Debug.Log($"[{ValtersVariousClasses.ModInitials}][Card] {GetTitle()} has been added to player {player.playerID}.");
+            FragmentationHitSurfaceEffect hitEffect = player.gameObject.GetOrAddComponent<FragmentationHitSurfaceEffect>();
+            hitEffect.shrapnel += 3;
             gun.GetAdditionalData().fragmentationProjectiles += 3;
-            player.gameObject.GetOrAddComponent<FragmentationHitSurfaceEffect>();
-            FragmentationHitSurfaceEffect.shrapnel += 3;
         }
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
             //Run when the card is removed from the player
             UnityEngine.Debug.Log($"[{ValtersVariousClasses.ModInitials}][Card] {GetTitle()} has been removed from player {player.playerID}.");
-
+            FragmentationHitSurfaceEffect hitEffect = player.gameObject.GetComponent<FragmentationHitSurfaceEffect>();
+            if (hitEffect)
+            {
+                UnityEngine.GameObject.Destroy(hitEffect);
+            }
         }
         protected override string GetTitle()
         {
@@ -68,7 +72,7 @@ namespace ValtersVariousClasses.Cards.Demolitionist
                 new CardInfoStat()
                 {
                     positive = true,
-                    stat = "dammage",
+                    stat = "damage",
                     amount = "10% more",
                     simepleAmount = CardInfoStat.SimpleAmount.notAssigned
                 }
