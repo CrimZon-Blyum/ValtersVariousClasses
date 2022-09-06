@@ -28,7 +28,11 @@ namespace ValtersVariousClasses.Cards.Demolitionist
         {
             //Edits values on player when card is selected
             UnityEngine.Debug.Log($"[{ValtersVariousClasses.ModInitials}][Card] {GetTitle()} has been added to player {player.playerID}.");
-            FragmentationHitSurfaceEffect hitEffect = player.gameObject.GetOrAddComponent<FragmentationHitSurfaceEffect>();
+            FragmentationHitSurfaceEffect hitEffect = player.gameObject.GetComponent<FragmentationHitSurfaceEffect>();
+            if(hitEffect == null)
+            {
+                hitEffect = player.gameObject.AddComponent<FragmentationHitSurfaceEffect>();
+            }
             hitEffect.shrapnel += 3;
             hitEffect.amount++;
             gun.GetAdditionalData().fragmentationProjectiles += 3;
