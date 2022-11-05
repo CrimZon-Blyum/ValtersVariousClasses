@@ -36,7 +36,6 @@ namespace ValtersVariousClasses.Effects
 
                 return obj;
             }
-            set { }
         }
     }
     public class FragmentationHitSurfaceEffect : HitSurfaceEffect
